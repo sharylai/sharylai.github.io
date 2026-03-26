@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VISION / NYC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f8f8f4;
+      --electric: #00e5ff;
+      --hot: #ff2d78;
+      --lime: #b5ff47;
+      --purple: #9b5de5;
+      --yellow: #ffe600;
+      --top-bar: #ff2d78;
+      --bar-base: #222;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 4rem;
+    }
+
+    /* ── TOP BANNER ── */
+    .banner {
+      width: 100%;
+      background: var(--yellow);
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .banner-ticker {
+      display: flex;
+      gap: 3rem;
+      animation: ticker 14s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .banner span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.18em;
+      color: var(--black);
+    }
+
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      max-width: 700px;
+      padding: 2.8rem 1.5rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .pre-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--electric);
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 5.5rem);
+      letter-spacing: 0.06em;
+      line-height: 1;
+      color: var(--white);
+    }
+    h1 span { color: var(--yellow); }
+    .sub {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-top: 0.2rem;
+    }
+
+    /* ── MAIN CARD ── */
+    .card {
+      width: 100%;
+      max-width: 700px;
+      padding: 0 1.5rem;
+    }
+
+    /* ── CAM ── */
+    #cam-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #111;
+      border: 2px solid #2a2a2a;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* corner accents */
+    #cam-wrap::before, #cam-wrap::after {
+      content: '';
+      position: absolute;
+      width: 28px; height: 28px;
+      border-color: var(--electric);
+      border-style: solid;
+      z-index: 2;
+    }
+    #cam-wrap::before { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+    #cam-wrap::after  { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+    #cam-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
+      display: block;
+    }
+
+    #cam-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      color: #444;
+    }
+    #cam-placeholder svg { width: 60px; height: 60px; }
+    #cam-placeholder p {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    /* LIVE badge */
+    .live-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: var(--hot);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      padding: 2px 10px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      z-index: 3;
+    }
+    .live-badge.show { display: flex; }
+    .live-dot {
+      width: 7px; height: 7px;
+      background: #fff;
+      border-radius: 50%;
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── CONTROLS ── */
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 1.2rem 0 2rem;
+      border: 2px solid #2a2a2a;
+    }
+    button {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      padding: 0.85rem 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, transform 0.1s;
+      background: #111;
+      color: #555;
+    }
+    button:not(:disabled):hover { transform: scaleY(1.03); }
+    #btn-start:not(:disabled) { background: var(--lime); color: var(--black); }
+    #btn-stop:not(:disabled)  { background: var(--hot);  color: #fff; }
+    button:disabled { cursor: not-allowed; }
+
+    /* ── BARS ── */
+    .section-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      color: #555;
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--yellow);
+      padding-left: 0.7rem;
+    }
+
+    #label-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+    }
+    .bar-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      color: var(--white);
+    }
+    .bar-score {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: #666;
+      font-weight: 600;
+    }
+    .bar-track {
+      height: 10px;
+      background: var(--bar-base);
+      position: relative;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--electric);
+      transition: width 0.22s ease, background 0.22s ease;
+    }
+    .bar-fill.top {
+      background: var(--hot);
+      box-shadow: 0 0 12px var(--hot);
+    }
+
+    /* status */
+    #status {
+      text-align: right;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: #444;
+      text-transform: uppercase;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ticker -->
+<div class="banner">
+  <div class="banner-ticker">
+    <span>TEACHABLE MACHINE</span>
+    <span>·</span>
+    <span>IMAGE CLASSIFIER</span>
+    <span>·</span>
+    <span>REAL-TIME VISION</span>
+    <span>·</span>
+    <span>NYC 2026</span>
+    <span>·</span>
+    <span>TEACHABLE MACHINE</span>
+    <span>·</span>
+    <span>IMAGE CLASSIFIER</span>
+    <span>·</span>
+    <span>REAL-TIME VISION</span>
+    <span>·</span>
+    <span>NYC 2026</span>
+    <span>·</span>
+  </div>
+</div>
+
+<header>
+  <div class="pre-title">AI · Image Recognition</div>
+  <h1>VI<span>SI</span>ON</h1>
+  <div class="sub">Teachable Machine · Live Inference</div>
+</header>
+
+<div class="card">
+  <div id="cam-wrap">
+    <div id="cam-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="1"/>
+      </svg>
+      <p>Camera Standby</p>
+    </div>
+    <div class="live-badge" id="live-badge">
+      <div class="live-dot"></div> LIVE
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="btn-start" onclick="startCam()">▶ START</button>
+    <button id="btn-stop"  onclick="stopCam()" disabled>■ STOP</button>
+  </div>
+
+  <div class="section-label">PREDICTION OUTPUT</div>
+  <div id="label-container"></div>
+  <div id="status">— STANDBY —</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script>
+  const MODEL_URL = "https://teachablemachine.withgoogle.com/models/zBpwYz949W/";
+
+  let model, webcam, maxPredictions, running = false, animId = null;
+
+  const labelContainer = document.getElementById('label-container');
+  const camWrap   = document.getElementById('cam-wrap');
+  const placeholder= document.getElementById('cam-placeholder');
+  const statusEl  = document.getElementById('status');
+  const btnStart  = document.getElementById('btn-start');
+  const btnStop   = document.getElementById('btn-stop');
+  const liveBadge = document.getElementById('live-badge');
+
+  async function startCam() {
+    btnStart.disabled = true;
+    statusEl.textContent = 'LOADING MODEL…';
+    try {
+      if (!model) {
+        model = await tmImage.load(MODEL_URL + 'model.json', MODEL_URL + 'metadata.json');
+        maxPredictions = model.getTotalClasses();
+        buildBars();
+      }
+      webcam = new tmImage.Webcam(640, 640, true);
+      await webcam.setup();
+      await webcam.play();
+      placeholder.style.display = 'none';
+      camWrap.appendChild(webcam.canvas);
+      liveBadge.classList.add('show');
+      running = true;
+      btnStop.disabled = false;
+      statusEl.textContent = 'RUNNING — LIVE INFERENCE';
+      loop();
+    } catch(e) {
+      statusEl.textContent = 'ERROR: ' + e.message;
+      btnStart.disabled = false;
+    }
+  }
+
+  function stopCam() {
+    running = false;
+    if (animId) cancelAnimationFrame(animId);
+    if (webcam) { webcam.stop(); webcam.canvas.remove(); }
+    placeholder.style.display = 'flex';
+    btnStart.disabled = false;
+    btnStop.disabled = true;
+    liveBadge.classList.remove('show');
+    statusEl.textContent = '— STOPPED —';
+    resetBars();
+  }
+
+  function loop() {
+    if (!running) return;
+    webcam.update();
+    predict();
+    animId = requestAnimationFrame(loop);
+  }
+
+  async function predict() {
+    const preds = await model.predict(webcam.canvas);
+    let topIdx = 0;
+    preds.forEach((p, i) => { if (p.probability > preds[topIdx].probability) topIdx = i; });
+    preds.forEach((p, i) => {
+      const pct  = (p.probability * 100).toFixed(1);
+      const fill  = labelContainer.children[i].querySelector('.bar-fill');
+      const score = labelContainer.children[i].querySelector('.bar-score');
+      fill.style.width = pct + '%';
+      fill.classList.toggle('top', i === topIdx);
+      score.textContent = pct + '%';
+    });
+  }
+
+  function buildBars() {
+    labelContainer.innerHTML = '';
+    const labels = model.getClassLabels();
+    for (let i = 0; i < maxPredictions; i++) {
+      const item = document.createElement('div');
+      item.className = 'bar-item';
+      item.innerHTML = `
+        <div class="bar-header">
+          <span class="bar-name">${labels[i]}</span>
+          <span class="bar-score">0.0%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill"></div></div>`;
+      labelContainer.appendChild(item);
+    }
+  }
+
+  function resetBars() {
+    document.querySelectorAll('.bar-fill').forEach(el => {
+      el.style.width = '0%'; el.classList.remove('top');
+    });
+    document.querySelectorAll('.bar-score').forEach(el => el.textContent = '0.0%');
+  }
+</script>
+</body>
+</html>
