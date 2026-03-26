@@ -231,7 +231,18 @@
         [4, 8, 12, 16, 20].forEach(idx => {
           let k = hand.keypoints[idx];
           let x = map(k.x, 0, 640, 0, width) + gx, y = map(k.y, 0, 480, 0, height) + gy;
-          noFill(); stroke(255, 180); circle(x, y, 12);
+
+          // 大迴圈：慢速擴張淡出（每個指尖用不同 phase offset 讓動畫錯開）
+          let phase = (frameCount * 1.5 + idx * 36) % 360;
+          let bigR = map(phase, 0, 360, 30, 80);
+          let bigA = map(phase, 0, 360, 200, 0);
+          noFill(); stroke(red(mainColor), green(mainColor), blue(mainColor), bigA);
+          strokeWeight(1.5);
+          circle(x, y, bigR * 2);
+          strokeWeight(1);
+
+          // 小固定圓
+          stroke(255, 180); circle(x, y, 12);
           fill(255, 150); textSize(9); text(`ID:${idx}`, x+15, y-10);
         });
       }
