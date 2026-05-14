@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 AI 影音革命隨筆 | 眼見為「虛」的時代</title>
+    <title>2026 影視革命：AI 影音工具全攻略</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            black: '#050505',
-                            dark: '#0f172a',
-                            accent: '#6366f1',
-                            highlight: '#a855f7',
-                            glass: 'rgba(15, 23, 42, 0.6)',
-                        }
+                        dark: '#0a0a0c',
+                        accent: '#6366f1',
+                        surface: '#16161a',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        highlight: '#00f2fe'
                     },
                     fontFamily: {
                         display: ['Outfit', 'Noto Sans TC', 'sans-serif'],
-                        body: ['Noto Sans TC', 'sans-serif'],
+                        body: ['Noto Sans TC', 'sans-serif']
                     },
                     animation: {
                         'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -31,7 +27,7 @@
                     },
                     keyframes: {
                         float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
                         }
                     }
@@ -41,327 +37,314 @@
     </script>
     <style>
         body {
-            background-color: #050505;
+            background-color: #0a0a0c;
             color: #e2e8f0;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(22, 22, 26, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .text-gradient {
-            background: linear-gradient(to right, #818cf8, #c084fc, #fb7185);
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #6366f1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero-gradient {
-            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent),
-                        radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.15), transparent);
+
+        .hero-mask {
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         }
-        .glow-dot {
-            width: 8px;
-            height: 8px;
-            background: #6366f1;
-            border-radius: 50%;
-            box-shadow: 0 0 15px #6366f1;
-            display: inline-block;
-            margin-right: 12px;
-        }
-        .scroll-reveal {
+
+        .sidebar-marker {
+            position: absolute;
+            left: -1rem;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #6366f1, #00f2fe);
+            border-radius: 2px;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease-out;
+            transition: opacity 0.3s;
         }
-        .scroll-reveal.active {
+
+        section:hover .sidebar-marker {
             opacity: 1;
-            transform: translateY(0);
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .bento-item {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .bento-item:hover {
+            transform: scale(1.02);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
     </style>
 </head>
-<body class="font-body selection:bg-indigo-500/30 hero-gradient">
+<body class="font-body antialiased">
 
-    <!-- Progress Bar -->
+    <!-- Sticky Navigation Progress -->
     <div class="fixed top-0 left-0 w-full h-1 z-50 bg-white/5">
-        <div id="progress" class="h-full bg-gradient-to-right from-indigo-500 to-purple-500 w-0 transition-all duration-150"></div>
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-accent to-highlight w-0 transition-all duration-150"></div>
     </div>
 
-    <!-- Hero Section -->
-    <header class="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full opacity-40 mix-blend-screen pointer-events-none">
-            <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] animate-pulse-slow"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <!-- Header / Hero Section -->
+    <header class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0 hero-mask">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent z-10"></div>
+            <img src='https://opal.google/board/blobs/1f7a949f-bc23-47e2-83d7-78babb38bb23' alt='media_1' class="w-full h-full object-cover opacity-60 scale-105 animate-pulse-slow" />
         </div>
-
-        <div class="container max-w-5xl z-10">
-            <div class="flex flex-col items-center text-center space-y-6">
-                <span class="px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-sm font-semibold tracking-wider uppercase animate-float">
-                    Trends • May 2026
-                </span>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black font-display leading-[1.1] tracking-tight">
-                    眼見為「虛」的時代，<br/>
-                    <span class="text-gradient">你的眼睛還能相信誰？</span>
-                </h1>
-                <p class="max-w-2xl text-lg md:text-xl text-slate-400 font-light leading-relaxed">
-                    2026 AI 影音革命隨筆：技術、倫理與那抹消失的人性溫度
-                </p>
+        
+        <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
+            <div class="inline-block px-4 py-1 mb-6 rounded-full glass-card border-accent/30 text-accent font-semibold tracking-widest text-xs uppercase animate-bounce">
+                Featured Article • May 2026
             </div>
-
-            <!-- Hero Banner 16:9 -->
-            <div class="mt-16 relative group">
-                <div class="absolute inset-0 bg-indigo-500/20 rounded-[32px] blur-2xl group-hover:bg-indigo-500/30 transition-all duration-500"></div>
-                <div class="relative overflow-hidden rounded-[32px] border border-white/10">
-                    <img src="https://opal.google/board/blobs/632c328d-0bdd-481d-a0f5-fc85a2444ed8" alt="AI Cinema Banner 16:9" class="w-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                </div>
-            </div>
+            <h1 class="font-display font-800 text-5xl md:text-7xl lg:text-8xl mb-8 leading-[1.1] tracking-tight">
+                <span class="gradient-text">2026 影視革命</span><br/>
+                <span class="text-white">現在連你的眼睛都不能相信了？</span>
+            </h1>
+            <p class="text-lg md:text-2xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed">
+                當「眼見為憑」演變成一個冷笑話，我們正處於一個「全 AI 生成」時代的奇點。這不只是一場技術升級，更是一場關於感知的認知革命。
+            </p>
         </div>
     </header>
 
-    <main class="container max-w-4xl mx-auto px-6 py-24 space-y-24">
+    <main class="max-w-6xl mx-auto px-6 lg:px-12 -mt-24 relative z-30 pb-20">
         
-        <!-- Intro Text -->
-        <section class="scroll-reveal active">
-            <p class="text-xl md:text-2xl text-slate-300 leading-relaxed font-light first-letter:text-6xl first-letter:font-bold first-letter:text-indigo-500 first-letter:mr-3 first-letter:float-left">
-                當你今天早上打開社群媒體，看到那位久未露面的日本偶像竟然出現在你家巷口的早餐店吃甜不辣，或者是在螢幕上看到某位政壇大老發表了驚世駭俗的道歉聲明時，請先別急著驚訝。在這個 2026 年的日常裡，你的大腦正處於一場前所未有的「視網膜保衛戰」。
-            </p>
-            <p class="text-xl md:text-2xl mt-8 text-slate-300 leading-relaxed font-light">
-                我們正身處一個「眼見為憑」正式宣告死亡的年代。
-            </p>
-        </section>
-
-        <!-- Section 1: The Three Giants -->
-        <section class="space-y-12 scroll-reveal">
-            <div class="flex items-center">
-                <div class="glow-dot"></div>
-                <h2 class="text-3xl md:text-4xl font-bold font-display text-white">一、 影音「三巨頭」的降臨</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Sora Pro -->
-                <div class="glass-card p-8 hover:bg-white/5 transition-colors group">
-                    <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4 text-white">Sora Pro</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        物理界的「細節狂魔」。基於時空補丁（Spacetime Patches），精準重現流體動力學與光線反射。
-                    </p>
-                </div>
-                <!-- Runway Gen-4 -->
-                <div class="glass-card p-8 hover:bg-white/5 transition-colors group">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4 text-white">Runway Gen-4</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        「虛擬副導」。搭載通用世界模型，懂物理規則，對鏡頭語言進行精確到幀的掌控。
-                    </p>
-                </div>
-                <!-- Lumiere 2.0 -->
-                <div class="glass-card p-8 hover:bg-white/5 transition-colors group">
-                    <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4 text-white">Lumiere 2.0</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        「說書大師」。結合 Gemini 3 語義理解，將長篇小說直接轉化為具備敘事結構的完整影片。
-                    </p>
-                </div>
-            </div>
-
-            <div class="glass-card p-10 bg-indigo-900/10 border-indigo-500/20">
-                <p class="text-slate-300 leading-relaxed italic">
-                    「這些黑科技背後的功臣，是 <span class="text-white font-semibold">DiT (Diffusion Transformer)</span> 與 <span class="text-white font-semibold">物理資訊神經網路 (PINNs)</span> 的合體。AI 不再只是『猜』下一個像素，而是內建了一個物理實驗室。」
-                </p>
-            </div>
-        </section>
-
-        <!-- Section 2: Timeline -->
-        <section class="space-y-12 scroll-reveal">
-            <div class="flex items-center">
-                <div class="glow-dot"></div>
-                <h2 class="text-3xl md:text-4xl font-bold font-display text-white">二、 時光機：演進之路</h2>
-            </div>
-            
-            <div class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
-                <!-- 2023 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-brand-black group-hover:border-indigo-500 transition-colors z-10 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <div class="w-2 h-2 bg-slate-600 group-hover:bg-indigo-500 rounded-full transition-colors"></div>
-                    </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[45%] glass-card p-6">
-                        <div class="flex items-center justify-between mb-1">
-                            <time class="font-display font-bold text-indigo-400">2023</time>
+        <!-- Intro Section -->
+        <section class="glass-card rounded-[2.5rem] p-8 md:p-16 mb-20 relative overflow-hidden">
+            <div class="sidebar-marker"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-8 text-white">一、 破題：這是看片，還是看「騙」？</h2>
+                    <div class="space-y-6 text-slate-300 text-lg leading-loose">
+                        <p>
+                            身為一個在資訊洪流中試圖保持清醒的知識分子，我最近常在思考一個哲學問題：當我們點開 YouTube 或 TikTok，我們看到的究竟是現實的碎片，還是算法織就的幻象？
+                        </p>
+                        <p>
+                            你可能沒意識到，現在 YouTube 上超過一半的熱門 Vlog 中，那些精緻的戶外場景、富有感染力的旁白，甚至主角身上那件隨風飄動的絲綢襯衫，可能根本「不存在」於物理世界。
+                        </p>
+                        <div class="p-6 bg-accent/10 border-l-4 border-accent rounded-r-xl">
+                            <p class="font-semibold text-accent mb-2">數據追蹤：</p>
+                            <p class="italic">根據 2026 年 5 月的最新調查，普通觀眾分辨 AI 生成影片與真實拍攝影片的正確率，已經神祕地跌破了 30% 的大關。</p>
                         </div>
-                        <div class="text-slate-300">啟蒙期：威爾史密斯吃麵亂碼。</div>
                     </div>
                 </div>
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80">
+                        <div class="absolute inset-0 rounded-full border-2 border-accent/20 animate-spin-slow"></div>
+                        <div class="absolute inset-4 rounded-full border border-highlight/30 animate-reverse-spin"></div>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                            <span class="text-6xl font-display font-bold text-highlight mb-2">30%</span>
+                            <span class="text-xs uppercase tracking-widest text-slate-400">分辨正確率</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Overview Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+            <div class="md:col-span-2 glass-card rounded-[2rem] p-10 bento-item">
+                <h2 class="text-3xl font-display font-bold mb-6 text-white">二、 這是什麼黑科技？</h2>
+                <p class="text-slate-400 leading-relaxed text-lg mb-6">
+                    目前的技術核心已經進化到了 <strong class="text-highlight">Diffusion-Transformer (DiT)</strong> 架構的大一統時代。這代表 AI 影音工具有了真正的「物理內核」。
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+                        <p class="text-accent font-bold mb-1">物理仿真</p>
+                        <p class="text-sm text-slate-500">理解重力、流體動力學與光影折射</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+                        <p class="text-highlight font-bold mb-1">一站式產線</p>
+                        <p class="text-sm text-slate-500">4K 畫質、多聲道配音、原創配樂同步生成</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gradient-to-br from-accent to-purple-600 rounded-[2rem] p-10 bento-item text-white flex flex-col justify-end">
+                <div class="mb-4 opacity-50"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                <h3 class="text-2xl font-bold mb-2">24/7 生產力</h3>
+                <p class="text-white/80 text-sm">內建了萬有引力邏輯、且不休息的好萊塢頂尖剪輯師。</p>
+            </div>
+        </div>
+
+        <!-- Evolution Timeline -->
+        <section class="mb-20 px-4">
+            <h2 class="text-4xl font-display font-bold mb-12 text-center gradient-text">三、 AI 的超速進化史</h2>
+            <div class="relative border-l-2 border-white/10 ml-4 md:ml-0 md:left-1/2">
                 <!-- 2024 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-brand-black group-hover:border-indigo-500 transition-colors z-10 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <div class="w-2 h-2 bg-slate-600 group-hover:bg-indigo-500 rounded-full transition-colors"></div>
+                <div class="mb-12 relative">
+                    <div class="md:absolute md:right-full md:mr-10 md:-top-2 text-right">
+                        <span class="text-accent font-display font-bold text-2xl">2023-2024</span>
+                        <h4 class="text-white font-bold text-xl">萌芽期</h4>
+                        <p class="text-slate-500 text-sm max-w-xs ml-auto">視覺陣痛期：長出第六根手指，或者是轉身後長相神祕變化。</p>
                     </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[45%] glass-card p-6">
-                        <time class="font-display font-bold text-indigo-400">2024</time>
-                        <div class="text-slate-300">轉折點：Sora 橫空出世，60 秒一致性場景。</div>
-                    </div>
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-accent ring-4 ring-accent/20"></div>
                 </div>
                 <!-- 2025 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-brand-black group-hover:border-indigo-500 transition-colors z-10 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <div class="w-2 h-2 bg-slate-600 group-hover:bg-indigo-500 rounded-full transition-colors"></div>
+                <div class="mb-12 relative">
+                    <div class="md:absolute md:left-full md:ml-10 md:-top-2">
+                        <span class="text-highlight font-display font-bold text-2xl">2025</span>
+                        <h4 class="text-white font-bold text-xl">穩定成長期</h4>
+                        <p class="text-slate-500 text-sm max-w-xs">攻克「人物一致性」。數位分身讓明星無需離開豪宅即可跨國拍攝。</p>
                     </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[45%] glass-card p-6">
-                        <time class="font-display font-bold text-indigo-400">2025</time>
-                        <div class="text-slate-300">商用潮：廣告圈大洗牌，UE5 混合工作流。</div>
-                    </div>
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-highlight ring-4 ring-highlight/20"></div>
                 </div>
                 <!-- 2026 -->
-                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-slate-700 bg-brand-black group-hover:border-indigo-500 transition-colors z-10 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                        <div class="w-2 h-2 bg-slate-600 group-hover:bg-indigo-500 rounded-full transition-colors"></div>
+                <div class="mb-12 relative">
+                    <div class="md:absolute md:right-full md:mr-10 md:-top-2 text-right">
+                        <span class="text-white font-display font-bold text-2xl">2026</span>
+                        <h4 class="text-highlight font-bold text-xl">全面進化 (Now!)</h4>
+                        <p class="text-slate-500 text-sm max-w-xs ml-auto">具備專業長片的剪輯與鏡頭調度，20 分鐘大片只需一杯咖啡時間。</p>
                     </div>
-                    <div class="w-[calc(100%-4rem)] md:w-[45%] glass-card p-6">
-                        <time class="font-display font-bold text-indigo-400">2026</time>
-                        <div class="text-slate-300">普及化：口袋裡的「個人影院」。</div>
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-white ring-4 ring-white/20"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Grid -->
+        <section class="mb-20">
+            <h2 class="text-3xl font-display font-bold mb-10 text-white flex items-center">
+                <span class="w-8 h-8 rounded-lg bg-accent mr-4 flex items-center justify-center text-sm">4</span>
+                四、 2026 神仙打架：誰是領頭羊？
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-card p-6 rounded-3xl hover:bg-white/5 transition-colors group">
+                    <div class="text-accent mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M22.28 12c0 5.68-4.6 10.28-10.28 10.28S1.72 17.68 1.72 12 6.32 1.72 12 1.72 22.28 6.32 22.28 12zM12 6.12c-3.25 0-5.88 2.63-5.88 5.88s2.63 5.88 5.88 5.88 5.88-2.63 5.88-5.88S15.25 6.12 12 6.12z"/></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Sora Pro</h3>
+                    <p class="text-sm text-slate-400">公認的「物理老師」。處理大規模地景與複雜空間邏輯的天花板。</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl hover:bg-white/5 transition-colors group">
+                    <div class="text-highlight mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Kling 3.0</h3>
+                    <p class="text-sm text-slate-400">細節空靈優雅。動漫風格與細膩人物交互（如眼神傳情）的極致。</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl hover:bg-white/5 transition-colors group">
+                    <div class="text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Runway Gen-4</h3>
+                    <p class="text-sm text-slate-400">導演救星。精準控制攝影機軌跡與角色骨架，聽命於創意。</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl hover:bg-white/5 transition-colors group">
+                    <div class="text-pink-400 mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Luma & Google</h3>
+                    <p class="text-sm text-slate-400">電影感光影與 YouTube 生態深度整合，實現「一鍵發片」夢想。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenges Section -->
+        <section class="glass-card rounded-[2.5rem] p-8 md:p-16 mb-20 relative overflow-hidden bg-gradient-to-br from-red-900/10 to-transparent border-red-500/20">
+            <h2 class="text-3xl font-display font-bold mb-10 text-white">五、 香歸香，這些爭議你也得知道</h2>
+            <div class="space-y-10">
+                <div class="flex gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-xl">⚖️</div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2">版權分配的轉型</h4>
+                        <p class="text-slate-400 leading-relaxed">《2025 AI 創收分配法案》執行後，系統會自動分配「風格佣金」給原創者，標誌著原創版權與生成科技的和解。</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-xl">🛡️</div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2">信任危機與詐騙</h4>
+                        <p class="text-slate-400 leading-relaxed">Deepfake 門檻降至冰點。沒有「數位人身認證」或「C2PA 水印標記」的視訊，大家都預設那是假的。</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-xl">🚀</div>
+                    <div>
+                        <h4 class="text-white font-bold mb-2">職業版圖的重塑</h4>
+                        <p class="text-slate-400 leading-relaxed">「AI 導演」成為年薪破千萬的新寵職業。人類角色從「執行者」轉向「決策者」。</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3 & Banner 2 -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center scroll-reveal">
-            <div class="space-y-6">
-                <div class="flex items-center">
-                    <div class="glow-dot"></div>
-                    <h2 class="text-3xl font-bold font-display text-white">三、 戰隊選哪邊？</h2>
-                </div>
-                <p class="text-slate-400 leading-relaxed">
-                    影視民主化是否意味著藝術的貶值？支持者欣喜於「小蝦米的勝利」，一個人也能拍出《沙丘》。但影評人擔憂：我們是否會對「完美」感到乏味？
-                </p>
-                <p class="text-slate-400 leading-relaxed italic border-l-2 border-indigo-500 pl-4">
-                    「AI 生成的影像雖然精準，但總少了一種『人類的不完美』帶來的溫度。」
-                </p>
-            </div>
-            <div class="relative group">
-                <div class="absolute inset-0 bg-purple-500/20 rounded-[32px] blur-xl group-hover:bg-purple-500/30 transition-all duration-500"></div>
-                <div class="relative overflow-hidden rounded-[32px] border border-white/10 aspect-square">
-                    <img src="https://opal.google/board/blobs/a5d52ba5-f84a-4662-8082-d4d9d45726f4" alt="AI Cinema Banner 1:1" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Hot Topics -->
-        <section class="space-y-12 scroll-reveal">
-            <div class="flex items-center">
-                <div class="glow-dot"></div>
-                <h2 class="text-3xl md:text-4xl font-bold font-display text-white">四、 辛辣議題：版權與數位通靈</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="glass-card p-8">
-                    <h4 class="text-lg font-bold text-white mb-4 flex items-center">
-                        <span class="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-3"></span>
-                        誰偷了我的畫筆？
-                    </h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        創作者版權指紋技術，試圖追蹤生成影片背後的藝術靈魂來自何方。法律的邊界正在重新劃定。
+        <!-- Future Brainstorming -->
+        <section class="mb-20">
+            <div class="relative p-12 rounded-[3rem] overflow-hidden bg-surface">
+                <div class="absolute inset-0 bg-highlight/5 animate-pulse"></div>
+                <div class="relative z-10 max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-8 text-white">六、 終極腦洞：連打字都不用了？</h2>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-8">
+                        腦機介面（BCI）的融合正在實驗室中醞釀，或許不久後，你只要大腦中閃過一個畫面，它就能即時渲染在螢幕上。
                     </p>
-                </div>
-                <div class="glass-card p-8">
-                    <h4 class="text-lg font-bold text-white mb-4 flex items-center">
-                        <span class="w-1.5 h-1.5 bg-purple-400 rounded-full mr-3"></span>
-                        與死者共影
-                    </h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        喚醒已故明星拍攝新片：到底是致敬還是數位剝削？這是 2026 年最具爭議的倫理考題。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 5: Future -->
-        <section class="relative p-12 rounded-[40px] overflow-hidden scroll-reveal">
-            <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/30 to-purple-900/30 backdrop-blur-md"></div>
-            <div class="relative z-10 space-y-8">
-                <div class="flex items-center">
-                    <div class="glow-dot"></div>
-                    <h2 class="text-3xl md:text-4xl font-bold font-display text-white">五、 未來趨勢：腦機投影</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div>
-                        <h4 class="text-indigo-300 font-bold mb-2">全感官 4D 生成</h4>
-                        <p class="text-slate-300 text-sm">你不只看得到那場雨，甚至能透過穿戴裝置感覺到濕氣與震動。</p>
-                    </div>
-                    <div>
-                        <h4 class="text-purple-300 font-bold mb-2">腦機介面 (BCI)</h4>
-                        <p class="text-slate-300 text-sm">讓夢中的跳躍意象，直接「投影」成震撼的影像。每個人都是夢境導演。</p>
+                    <div class="glass-card p-6 rounded-2xl border-white/5 inline-block animate-float">
+                        <p class="text-highlight text-sm tracking-widest font-bold">NEXT FRONTIER: PERSONALIZED SENSORY CINEMA</p>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Section 6: Social -->
-        <section class="space-y-12 scroll-reveal">
-            <div class="flex items-center">
-                <div class="glow-dot"></div>
-                <h2 class="text-3xl md:text-4xl font-bold font-display text-white">六、 社群新玩家</h2>
-            </div>
-            <div class="flex flex-wrap gap-4">
-                <span class="glass-card px-6 py-4 flex items-center space-x-3 hover:border-indigo-500/50 transition-all cursor-default">
-                    <span class="text-2xl">🕺</span>
-                    <div>
-                        <div class="text-xs text-slate-500">TikTok</div>
-                        <div class="text-sm font-semibold">AI 即時變裝挑戰</div>
-                    </div>
-                </span>
-                <span class="glass-card px-6 py-4 flex items-center space-x-3 hover:border-purple-500/50 transition-all cursor-default">
-                    <span class="text-2xl">🎬</span>
-                    <div>
-                        <div class="text-xs text-slate-500">YouTube</div>
-                        <div class="text-sm font-semibold">同人創作 2.0</div>
-                    </div>
-                </span>
             </div>
         </section>
 
         <!-- Conclusion -->
-        <section class="pt-12 border-t border-white/10 scroll-reveal">
-            <h2 class="text-2xl font-bold mb-8 text-white">結語</h2>
-            <div class="space-y-6 text-slate-300 leading-relaxed">
+        <section class="text-center py-10">
+            <h2 class="text-4xl md:text-5xl font-display font-bold mb-10 text-white">七、 結語</h2>
+            <div class="max-w-2xl mx-auto space-y-6 text-slate-300 text-lg mb-12 leading-relaxed">
                 <p>
-                    在 AI 影音的洪流裡，技術會不斷更迭，軟體會過時。但請記住，當所有視覺效果都能被 AI 廉價產出時，你那個「無法被算法定義」的想像力與對人性細膩的觀察，才是你個人品牌中最神聖不可侵犯的版權。
+                    身處 2026 年，AI 影音工具已經從一個「新鮮的玩具」轉變成了「必備的生存工具」。
                 </p>
-                <div class="bg-gradient-to-r from-indigo-500/10 to-transparent p-8 rounded-2xl border-l-4 border-indigo-500">
-                    <p class="text-lg text-white font-medium">
-                        如果你能用 AI 復活一個明星，甚至是已故的親人，在那短短的一分鐘影片裡，你最想聽他們說什麼？在追求真實的技術裡，我們最終尋找的，始終是那份科技無法模擬的、真實的連結。
-                    </p>
-                </div>
-                <div class="pt-12 flex justify-between items-center text-sm text-slate-500">
-                    <span>ID: M11408909</span>
-                    <span>2026/05/14</span>
-                </div>
+                <p class="text-white font-semibold">
+                    與其執著於分辨哪 30% 是真的，不如索性跳進這場數位洪流。
+                </p>
+                <p>
+                    在這個連眼睛都不能相信的時代，唯有你的意志與審美，才是唯一真實的座標。
+                </p>
+            </div>
+            <button class="bg-gradient-to-r from-accent to-highlight text-dark font-bold px-10 py-4 rounded-full text-lg shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:scale-105 transition-transform">
+                開始你的創作革命
+            </button>
+            <div class="mt-16 text-slate-500 font-display tracking-widest">
+                ID: M11408909 • PUBLISHED 2026/05/14
             </div>
         </section>
 
     </main>
 
-    <script>
-        // Progress bar logic
-        window.addEventListener('scroll', () => {
-            const progress = document.getElementById('progress');
-            const totalHeight = document.body.scrollHeight - window.innerHeight;
-            const progressWidth = (window.pageYOffset / totalHeight) * 100;
-            progress.style.width = progressWidth + '%';
-        });
+    <!-- UI Overlay Elements -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-accent/20 transition-colors group">
+            <svg class="w-6 h-6 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+        </button>
+    </div>
 
-        // Intersection Observer for scroll reveal
+    <script>
+        // Progress Bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // Reveal on Scroll simulation
         const observerOptions = {
             threshold: 0.1
         };
@@ -369,12 +352,16 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('translate-y-10');
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'translate-y-10', 'opacity-0');
+            observer.observe(section);
+        });
     </script>
 </body>
 </html>
