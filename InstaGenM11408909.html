@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Creator Preview | M11408909</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    colors: {
+                        instagram: {
+                            bg: '#F8F9FA',
+                            card: '#FFFFFF',
+                            text: '#262626',
+                            accent: '#0095F6',
+                            muted: '#8E8E8E',
+                            border: '#DBDBDB',
+                        }
+                    },
+                    boxShadow: {
+                        'premium': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'inner-soft': 'inset 0 2px 4px 0 rgba(0,0,0,0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8F9FA;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .post-card {
+            transition: transform 0.3s ease;
+        }
+        .post-card:hover {
+            transform: translateY(-2px);
+        }
+        .media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* Custom scrollbar for aesthetic */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E2E8F0;
+            border-radius: 10px;
+        }
+        .heart-btn:active {
+            transform: scale(1.2);
+            color: #ed4956;
+        }
+        .btn-hover {
+            transition: all 0.2s ease;
+        }
+        .btn-hover:hover {
+            opacity: 0.6;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="font-sans text-instagram-text min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <nav class="glass-header sticky top-0 z-50 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <span class="font-bold text-sm tracking-tight uppercase text-gray-800">AI Content Creator <span class="text-instagram-accent">Preview</span></span>
+        </div>
+        <div class="flex space-x-4">
+            <button class="text-xs font-semibold bg-instagram-text text-white px-3 py-1.5 rounded-full hover:bg-black transition-colors">Export Post</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow flex items-center justify-center p-4 md:p-10">
+        <div class="w-full max-w-[500px]">
+            
+            <!-- The Post Card -->
+            <article class="post-card bg-instagram-card rounded-2xl shadow-premium overflow-hidden border border-gray-100">
+                
+                <!-- Card Header (User Info) -->
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[2px]">
+                            <div class="w-full h-full bg-white rounded-full p-[2px]">
+                                <div class="w-full h-full bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-bold text-[14px] leading-tight">M11408909</p>
+                            <p class="text-[12px] text-instagram-muted font-medium">Taiwan • Explore Mode</p>
+                        </div>
+                    </div>
+                    <button class="p-1 hover:bg-gray-50 rounded-full transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Main Visual (1:1 Ratio) -->
+                <div class="media-container aspect-square overflow-hidden bg-gray-50 relative group">
+                    <!-- The media object from data -->
+                    <img src='https://opal.google/board/blobs/297f7074-aba4-4e1b-83c3-d95a34affa07' alt='Cycling Journey in Taiwan' class="transition-transform duration-700 group-hover:scale-105" />
+                    
+                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                </div>
+
+                <!-- Interaction Bar -->
+                <div class="px-4 py-3 flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button class="btn-hover heart-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </button>
+                        <button class="btn-hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                        </button>
+                        <button class="btn-hover">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="btn-hover">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Engagement Count -->
+                <div class="px-4 pb-1">
+                    <p class="font-bold text-sm">1,148 likes</p>
+                </div>
+
+                <!-- Caption Section -->
+                <div class="px-4 pb-4 space-y-2">
+                    <div class="caption-block">
+                        <p class="text-[14px] leading-[1.65] whitespace-pre-wrap">
+                            <span class="font-bold mr-1 text-instagram-accent">M11408909</span> 踏出這一步，挑戰自我！🚴‍♂️✨
+
+這不僅僅是一趟單車環島旅程，更是對意志力的極大考驗！沿途的風景、流下的汗珠、還有路人的打氣聲，每一刻都想好好記錄下來。☀️⛰️ 
+
+雖然雙腿痠痛，但心跳的節律和眼前的蔚藍海岸，讓這一切都變得無比值得！台灣，我們正在用雙腳感受妳的美。🇹🇼💪
+                        </p>
+                    </div>
+                    
+                    <!-- Hashtags -->
+                    <div class="flex flex-wrap gap-x-1.5 text-[14px]">
+                        <a href="#" class="text-blue-900 font-medium hover:underline">#環島</a>
+                        <a href="#" class="text-blue-900 font-medium hover:underline">#單車旅行</a>
+                        <a href="#" class="text-blue-900 font-medium hover:underline">#挑戰自我</a>
+                        <a href="#" class="text-blue-900 font-medium hover:underline">#台灣之美</a>
+                        <a href="#" class="text-blue-900 font-medium hover:underline">#腳踏車環島</a>
+                        <a href="#" class="text-blue-900 font-medium hover:underline">#熱血人生</a>
+                        <a href="#" class="text-blue-900 font-medium hover:underline">#單車環島之旅</a>
+                    </div>
+
+                    <p class="text-[10px] uppercase text-instagram-muted font-semibold mt-2 tracking-wide">3 HOURS AGO</p>
+                </div>
+
+                <!-- Comment Input Mimic -->
+                <div class="border-t border-gray-100 p-4 hidden md:flex items-center justify-between">
+                    <div class="flex items-center space-x-3 flex-grow">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="text-sm text-gray-400">Add a comment...</span>
+                    </div>
+                    <button class="text-instagram-accent font-bold text-sm opacity-50 cursor-not-allowed">Post</button>
+                </div>
+            </article>
+
+            <!-- Bottom Badge -->
+            <div class="mt-8 flex flex-col items-center justify-center space-y-2 opacity-60">
+                <div class="flex items-center space-x-2 bg-white/50 px-3 py-1 rounded-full border border-gray-200">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                    </span>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500">Generated with AI Precision</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple micro-interaction for the heart button
+        const heartBtn = document.querySelector('.heart-btn');
+        let liked = false;
+        heartBtn.addEventListener('click', function() {
+            liked = !liked;
+            const svg = this.querySelector('svg');
+            if(liked) {
+                svg.setAttribute('fill', '#ed4956');
+                svg.setAttribute('stroke', '#ed4956');
+                svg.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    svg.style.transform = 'scale(1)';
+                }, 200);
+            } else {
+                svg.setAttribute('fill', 'none');
+                svg.setAttribute('stroke', 'currentColor');
+            }
+        });
+    </script>
+</body>
+</html>
